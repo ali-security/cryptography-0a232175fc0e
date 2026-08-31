@@ -11,13 +11,11 @@ on:
         required: true
         type: choice
         options: ["testpypi", "pypi"]
-  workflow_run:
-    workflows: ["Wheel Builder"]
-    types: [completed]
 
 jobs:
   publish:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     # We're not actually verifying that the triggering push event was for a
     # tag, because github doesn't expose enough information to do so.
     # wheel-builder.yml currently only has push events for tags.

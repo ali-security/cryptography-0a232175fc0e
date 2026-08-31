@@ -5,8 +5,12 @@ runs:
   using: "composite"
 
   steps:
-    - uses: actions/checkout@v3.5.2
+    - uses: actions/checkout@v4
       with:
         repository: "google/wycheproof"
         path: "wycheproof"
-        ref: "master"
+        # `master` no longer exists in google/wycheproof, so the nested
+        # checkout failed after 3 retries and killed every ci.yml leg. Pin the
+        # commit that was wycheproof HEAD on 2023-11-03 (just before the
+        # 41.0.7 release) so the test vectors stay reproducible.
+        ref: "d9f6ec7d8bd8c96da05368999094e4a75ba5cb3d"

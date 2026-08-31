@@ -4,14 +4,12 @@ permissions:
 
 on:
   workflow_dispatch:
-  schedule:
-    # Run daily
-    - cron: "0 0 * * *"
 
 jobs:
   bump:
     if: github.repository_owner == 'pyca'
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v3.5.2
       - id: check-sha-boring

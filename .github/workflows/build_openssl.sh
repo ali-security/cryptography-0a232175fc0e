@@ -20,7 +20,8 @@ if [[ "${TYPE}" == "openssl" ]]; then
     pushd openssl
     git checkout "${VERSION}"
   else
-    curl -O "https://www.openssl.org/source/openssl-${VERSION}.tar.gz"
+    # -L: www.openssl.org now answers with a redirect stub; --fail: surface HTTP errors instead of writing a bad tarball
+    curl -L --fail -O "https://www.openssl.org/source/openssl-${VERSION}.tar.gz"
     tar zxf "openssl-${VERSION}.tar.gz"
     pushd "openssl-${VERSION}"
   fi
@@ -57,7 +58,8 @@ if [[ "${TYPE}" == "openssl" ]]; then
   fi
   popd
 elif [[ "${TYPE}" == "libressl" ]]; then
-  curl -O "https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${VERSION}.tar.gz"
+  # -L follows redirects, --fail surfaces HTTP errors instead of writing a bad tarball
+  curl -L --fail -O "https://ftp.openbsd.org/pub/OpenBSD/LibreSSL/libressl-${VERSION}.tar.gz"
   tar zxf "libressl-${VERSION}.tar.gz"
   pushd "libressl-${VERSION}"
   ./config -Wl -Wl,-Bsymbolic-functions -fPIC shared --prefix="${OSSL_PATH}"
